@@ -23,7 +23,7 @@ public class RouteService extends AbstractService<Route, String> {
 
     public void loadData() {
 	for (Route route : Util.converteRouteCSV()) {
-	    save(route);
+	    this.save(route);
 	}
     }
 

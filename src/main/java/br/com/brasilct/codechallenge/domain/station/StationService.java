@@ -23,7 +23,7 @@ public class StationService extends AbstractService<Station, String> {
 
     public void loadData() {
 	for (Station route : Util.converteStationCSV()) {
-	    save(route);
+	    this.save(route);
 	}
     }
 
