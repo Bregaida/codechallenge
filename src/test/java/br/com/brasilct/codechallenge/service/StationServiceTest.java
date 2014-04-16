@@ -7,16 +7,16 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.brasilct.codechallenge.domain.line.LineService;
+import br.com.brasilct.codechallenge.domain.station.StationService;
 
 /**
  * @author eduardobregaida
  * 
  */
-public class LineServiceTest extends AbstractServiceTestSupport {
+public class StationServiceTest {
 
     @Autowired
-    private LineService service;
+    private StationService service;
 
     @Test
     public void deveriaBuscarDadosInseridos() {

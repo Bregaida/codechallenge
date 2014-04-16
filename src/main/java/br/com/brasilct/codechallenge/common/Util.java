@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import br.com.brasilct.codechallenge.domain.line.Line;
@@ -25,6 +28,7 @@ public class Util {
     private static final String LINES_CSV = "src/main/resources/lines.csv";
     private static final String ROUTES_CSV = "src/main/resources/routes.csv";
     private static CSVReader reader;
+    private static Logger logger = LoggerFactory.getLogger(Util.class);
 
     public static Collection<Line> converteLineCSV() {
 
@@ -49,9 +53,9 @@ public class Util {
 	    }
 	    return lines;
 	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
+	    logger.error("File not Found: " + e.getMessage());
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("IOException: " + e.getMessage());
 	}
 	return null;
     }
@@ -78,9 +82,9 @@ public class Util {
 	    }
 	    return routes;
 	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
+	    logger.error("File not Found: " + e.getMessage());
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("IOException: " + e.getMessage());
 	}
 	return null;
     }
@@ -108,9 +112,9 @@ public class Util {
 	    }
 	    return stations;
 	} catch (FileNotFoundException e) {
-	    e.printStackTrace();
+	    logger.error("File not Found: " + e.getMessage());
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    logger.error("IOException: " + e.getMessage());
 	}
 	return null;
     }
