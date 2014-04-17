@@ -41,15 +41,17 @@ public class Util {
 	    Line line = null;
 	    Station station = null;
 	    for (String[] string : reader.readAll()) {
-		line = new Line();
-		station = new Station();
-		station.setStationNumber(string[0]);
-		line.setStation1(station);
-		station = new Station();
-		station.setStationNumber(string[1]);
-		line.setStation2(station);
-		line.setLineNumber(string[2]);
-		lines.add(line);
+		if (!string[0].equalsIgnoreCase("station1")) {
+		    line = new Line();
+		    station = new Station();
+		    station.setStationNumber(string[0]);
+		    line.setStation1(station);
+		    station = new Station();
+		    station.setStationNumber(string[1]);
+		    line.setStation2(station);
+		    line.setLineNumber(string[2]);
+		    lines.add(line);
+		}
 	    }
 	    return lines;
 	} catch (FileNotFoundException e) {
@@ -71,14 +73,16 @@ public class Util {
 	    Route route = null;
 	    Line line = null;
 	    for (String[] string : reader.readAll()) {
-		route = new Route();
-		line = new Line();
-		line.setLineNumber(string[0]);
-		route.setLine(line);
-		route.setName(string[1]);
-		route.setColour(string[2]);
-		route.setStripe(string[3]);
-		routes.add(route);
+		if (!string[0].equalsIgnoreCase("line")) {
+		    route = new Route();
+		    line = new Line();
+		    line.setLineNumber(string[0]);
+		    route.setLine(line);
+		    route.setName(string[1]);
+		    route.setColour(string[2]);
+		    route.setStripe(string[3]);
+		    routes.add(route);
+		}
 	    }
 	    return routes;
 	} catch (FileNotFoundException e) {
@@ -99,16 +103,21 @@ public class Util {
 	    Collection<Station> stations = new ArrayList<>();
 	    Station station = null;
 	    for (String[] string : reader.readAll()) {
-		station = new Station();
-		station.setIdentificacao(string[0]);
-		station.setLatitude(string[1]);
-		station.setLongitude(string[2]);
-		station.setName(string[3]);
-		station.setDisplayName(string[4]);
-		station.setZone(string[5]);
-		station.setTotalLines(string[6]);
-		station.setRail(string[7]);
-		stations.add(station);
+		if (!string[0].equalsIgnoreCase("id")) {
+		    station = new Station();
+		    station.setId(string[0]);
+		    station.setPosition(new double[] {
+			    Double.parseDouble(string[1]),
+			    Double.parseDouble(string[2]) });
+		    // station.setLatitude(string[1]);
+		    // station.setLongitude(string[2]);
+		    station.setName(string[3]);
+		    station.setDisplayName(string[4]);
+		    station.setZone(string[5]);
+		    station.setTotalLines(string[6]);
+		    station.setRail(string[7]);
+		    stations.add(station);
+		}
 	    }
 	    return stations;
 	} catch (FileNotFoundException e) {

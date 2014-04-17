@@ -4,7 +4,6 @@
 package br.com.brasilct.codechallenge.domain.station;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -19,10 +18,7 @@ public class Station {
     private String identificacao;
     private String stationNumber;
     private String name;
-    @GeoSpatialIndexed
-    private String latitude;
-    @GeoSpatialIndexed
-    private String longitude;
+    private double[] position;
     private String displayName;
     private String zone;
     private String totalLines;
@@ -60,20 +56,12 @@ public class Station {
 	this.name = name;
     }
 
-    public String getLatitude() {
-	return latitude;
+    public double[] getPosition() {
+	return position;
     }
 
-    public void setLatitude(String latitude) {
-	this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-	return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-	this.longitude = longitude;
+    public void setPosition(double[] position) {
+	this.position = position;
     }
 
     public String getDisplayName() {

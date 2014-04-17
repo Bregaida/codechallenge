@@ -3,7 +3,15 @@
  */
 package br.com.brasilct.codechallenge.domain.station;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.Box;
+import org.springframework.data.mongodb.core.geo.Distance;
+import org.springframework.data.mongodb.core.geo.GeoResults;
+import org.springframework.data.mongodb.core.geo.Point;
+import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.stereotype.Service;
 
 import br.com.brasilct.codechallenge.common.AbstractService;
@@ -21,6 +29,9 @@ public class StationService extends AbstractService<Station, String> {
 	super.setRepository(stationRepository);
     }
 
+    @Autowired
+    MongoTemplate template;
+
     public void loadData() {
 	for (Station route : Util.converteStationCSV()) {
 	    this.save(route);
@@ -32,9 +43,22 @@ public class StationService extends AbstractService<Station, String> {
 	return "name";
     }
 
-    // public Collection<Station> findSimpleRoute(double latitude, double
-    // longitude) {
-    // return ((StationService) getRepository()).findSimpleRoute(latitude,
-    // longitude);
+    public GeoResults<Station> findByPositionNear(Point point, Distance distance) {
+
+	NearQuery nearQuery = NearQuery.near(point).maxDistance(distance);
+
+	return template.geoNear(nearQuery, Station.class);
+    }
+
+    public Collection<Station> findByPositionWithin(Box box) {
+	return ((StationRepository) getRepository()).findByPositionWithin(box);
+    }
+    // public GeoResults<Station> findByPositionWithin(Point point,
+    // Distance distance) {
+    //
+    // NearQuery nearQuery = NearQuery.near(point).maxDistance(distance);
+    //
+    // return template.geoNear(nearQuery, Station.class);
     // }
+
 }
