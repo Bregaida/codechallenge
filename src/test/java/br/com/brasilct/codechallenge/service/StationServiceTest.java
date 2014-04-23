@@ -55,4 +55,16 @@ public class StationServiceTest extends AbstractServiceTestSupport {
 	}
 
     }
+
+    @Test
+    public void deveriaTrazerMelhorCaminhoComDoisPontos() {
+	Point point = new Point(51.5028, -0.2801);
+	Point pointTwo = new Point(51.5439, -0.2759);
+	Box box = new Box(point, pointTwo);
+	Collection<Station> locations = service.findByPositionWithin(box);
+	for (Station station : locations) {
+	    System.out.println("Estação: " + station.getName());
+	}
+
+    }
 }

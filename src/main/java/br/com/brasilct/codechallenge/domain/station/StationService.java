@@ -8,6 +8,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.Box;
+import org.springframework.data.mongodb.core.geo.Circle;
 import org.springframework.data.mongodb.core.geo.Distance;
 import org.springframework.data.mongodb.core.geo.GeoResults;
 import org.springframework.data.mongodb.core.geo.Point;
@@ -53,12 +54,10 @@ public class StationService extends AbstractService<Station, String> {
     public Collection<Station> findByPositionWithin(Box box) {
 	return ((StationRepository) getRepository()).findByPositionWithin(box);
     }
-    // public GeoResults<Station> findByPositionWithin(Point point,
-    // Distance distance) {
-    //
-    // NearQuery nearQuery = NearQuery.near(point).maxDistance(distance);
-    //
-    // return template.geoNear(nearQuery, Station.class);
-    // }
+
+    public Collection<Station> findByPositionWithin(Circle circle) {
+	return ((StationRepository) getRepository())
+		.findByPositionWithin(circle);
+    }
 
 }

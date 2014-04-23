@@ -4,7 +4,7 @@
     <jmxConfigurator />
 
     <logger name="h2database" level="WARN"/>
-    <logger name="org.springframework" level="DEBUG" />
+    <logger name="org.springframework" level="INFO" />
     <logger name="org.springframework.security" level="ERROR" />
     <logger name="org.hibernate" level="ERROR" />
 
@@ -16,7 +16,7 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

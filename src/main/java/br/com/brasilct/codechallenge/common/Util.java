@@ -6,6 +6,7 @@ package br.com.brasilct.codechallenge.common;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,6 +18,12 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import br.com.brasilct.codechallenge.domain.line.Line;
 import br.com.brasilct.codechallenge.domain.route.Route;
 import br.com.brasilct.codechallenge.domain.station.Station;
+
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.LatLng;
 
 /**
  * @author eduardobregaida
@@ -126,5 +133,44 @@ public class Util {
 	    logger.error("IOException: " + e.getMessage());
 	}
 	return null;
+    }
+
+    public static double getDistancia(double latitude, double longitude,
+	    double latitudePto, double longitudePto) {
+	double ptolat = Math.toRadians(latitude);
+	double ptolon = Math.toRadians(longitude);
+	double pto2lat = Math.toRadians(latitudePto);
+	double pto2lon = Math.toRadians(longitudePto);
+
+	double dlon, dlat, a, distancia;
+
+	dlon = pto2lon - ptolon;
+	dlat = pto2lat - ptolat;
+
+	a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(latitude)
+		* Math.cos(latitudePto) * Math.pow(Math.sin(dlon / 2), 2);
+	distancia = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+	return (distancia * 6378140);
+    }
+
+    public static GeocodeResponse getGeoCoding(BigDecimal latitude,
+	    BigDecimal longitude, BigDecimal latitudePto,
+	    BigDecimal longitudePto) {
+	final Geocoder geocoder = new Geocoder();
+
+	LatLng latLng = new LatLng(latitude, longitude);
+	LatLng latLng2 = new LatLng(latitudePto, longitudePto);
+	GeocoderRequest geocoderRequest = new GeocoderRequestBuilder()
+		.setLocation(latLng).getGeocoderRequest();
+	GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
+	return geocoderResponse;
+
+    }
+
+    public static void main(String[] args) {
+	System.out.println("Distancia: "
+		+ Util.getGeoCoding(new BigDecimal(-20), new BigDecimal(-49),
+			null, null));
     }
 }
